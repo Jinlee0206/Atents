@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class CharacterMovement : CharacterProperty
 {
-    Coroutine coMove = null;
+    Coroutine coMove = null;            // 이전 MovingToPos 코루틴 함수 중지를 위해 Coroutine 인스턴스 생성
 
     protected void MoveToPos(Vector3 pos, UnityAction done = null)
     {
@@ -49,7 +49,7 @@ public class CharacterMovement : CharacterProperty
         }
 
         myAnim.SetBool("isMoving", false);
-        done?.Invoke();
+        done?.Invoke();                         // done 이 null이 아니라면 Invoke();
     }
 
     //IEnumerator MovingToPos(Vector3[] pathList)

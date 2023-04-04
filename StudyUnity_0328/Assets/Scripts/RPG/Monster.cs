@@ -55,7 +55,6 @@ public class Monster : CharacterMovement, IPerception, IBattle
             case State.Battle:
                 break;
             case State.Death:
-                
                 break;
             default:
                 Debug.Log("처리 되지 않는 상태 입니다.");
@@ -82,7 +81,8 @@ public class Monster : CharacterMovement, IPerception, IBattle
         Vector3 pos = orgPos;
         pos.x += Random.Range(-5.0f, 5.0f);
         pos.z += Random.Range(-5.0f, 5.0f);
-        MoveToPos(pos, ()=> StartCoroutine(Roaming(Random.Range(1.0f,3.0f))));
+        MoveToPos(pos, ()=> StartCoroutine(Roaming(Random.Range(1.0f,3.0f))));  // 기존의 MoveToPos 함수 사용하는데, 델리게이트 (UnityAction) 사용해서
+                                                                                // MoveToPos를 재호출 
     }
 
     public void Find(Transform target)
