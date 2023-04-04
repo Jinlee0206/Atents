@@ -1,0 +1,14 @@
+문제:https://school.programmers.co.kr/learn/courses/30/lessons/132267#
+
+수도 코드:
+public int solution(int a, int b, int n)
+{
+	leftover_cola에 처음 콜라의 갯수 할당
+	total=0;
+	leftover_cola -> a보다 크거나 같을때 까지 반복{
+	leftover_cola 를 a로 나눈 몫을 change변수에 할당
+	leftover_cola의 값을 변경
+	total 값에 change더함
+}
+return total;
+}

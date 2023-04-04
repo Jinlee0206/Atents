@@ -1,0 +1,21 @@
+Test1
+https://school.programmers.co.kr/learn/courses/30/lessons/42747#
+
+
+public int solution(int[] citations)
+{
+	H-Index  
+	citations 내림차순 정렬
+	 i 를  0->citation의 크기까지 반복
+	{
+		i 가 citation의 i 번째방보다 클때
+		{
+			H-Index =i;
+		} 
+		또는 citation의 모든값이 i보다 클때
+		{
+			H-Index = citation의 크기;
+		}
+	}
+H-Index를 리턴
+}

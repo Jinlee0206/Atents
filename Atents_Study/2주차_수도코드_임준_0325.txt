@@ -1,0 +1,610 @@
+Link < https://school.programmers.co.kr/learn/courses/30/lessons/172928 >
+
+Q) 지나다니는 길을 'O', 장애물을 'X'로 나타낸 직사각형 격자 모양의 공원에서 로봇 강아지가 산책을 하려합니다. 
+ 산책은 로봇 강아지에 미리 입력된 명령에 따라 진행하며, 명령은 다음과 같은 형식으로 주어집니다.
+
+ ["방향 거리", "방향 거리" … ]
+
+예를 들어 "E 5"는 로봇 강아지가 현재 위치에서 동쪽으로 5칸 이동했다는 의미입니다. 로봇 강아지는 명령을 수행하기 전에 다음 두 가지를 먼저 확인합니다.
+
+	1. 주어진 방향으로 이동할 때 공원을 벗어나는지 확인합니다.
+	2. 주어진 방향으로 이동 중 장애물을 만나는지 확인합니다.
+
+위 두 가지중 어느 하나라도 해당된다면, 로봇 강아지는 해당 명령을 무시하고 다음 명령을 수행합니다.
+공원의 가로 길이가 W, 세로 길이가 H라고 할 때, 공원의 좌측 상단의 좌표는 (0, 0), 우측 하단의 좌표는 (H - 1, W - 1) 입니다.
+
+
+공원을 나타내는 문자열 배열 park, 로봇 강아지가 수행할 명령이 담긴 문자열 배열 routes가 매개변수로 주어질 때,
+로봇 강아지가 모든 명령을 수행 후 놓인 위치를 [세로 방향 좌표, 가로 방향 좌표] 순으로 배열에 담아 return 하도록 solution 함수를 완성해주세요.
+
+
+제한사항 
+-------------------------------------------------------------------
+3 ≤ park의 길이 ≤ 50
+3 ≤ park[i]의 길이 ≤ 50
+-------------------------------------------------------------------
+park[i]는 다음 문자들로 이루어져 있으며 시작지점은 하나만 주어집니다.
+S : 시작 지점
+O : 이동 가능한 통로
+X : 장애물
+
+park는 직사각형 모양입니다.
+1 ≤ routes의 길이 ≤ 50
+
+-------------------------------------------------------------------
+
+routes의 각 원소는 로봇 강아지가 수행할 명령어를 나타냅니다.
+로봇 강아지는 routes의 첫 번째 원소부터 순서대로 명령을 수행합니다.
+
+routes의 원소는 "op n"과 같은 구조로 이루어져 있으며, op는 이동할 방향, n은 이동할 칸의 수를 의미합니다.
+
+op는 다음 네 가지중 하나로 이루어져 있습니다.
+N : 북쪽으로 주어진 칸만큼 이동합니다.
+S : 남쪽으로 주어진 칸만큼 이동합니다.
+W : 서쪽으로 주어진 칸만큼 이동합니다.
+E : 동쪽으로 주어진 칸만큼 이동합니다.
+
+1 ≤ n ≤ 9
+
+-------------------------------------------------------------------
+입출력 예
+park					routes			result
+["SOO","OOO","OOO"]		["E 2","S 2","W 1"]	[2,1]
+["SOO","OXX","OOO"]		["E 2","S 2","W 1"]	[0,1]
+["OSO","OOO","OXO","OOO"]	["E 2","S 3","W 1"]	[0,0]
+
+
+문제 핵심 문장
+================================================================================================================
+
+1. "위 두 가지중 어느 하나라도 해당된다면" ==> or? ==> 둘 중 하나라도 거짓이면, 결과는 거짓
+2. 주어진 방향으로 이동 중 장애물을 만나는지 확인합니다. ==> 이동 '중' == 함정 
+
+================================================================================================================
+
+
+수도코드 - 번호는 보는 순서
+================================================================================================================
+
+//2번
+void StartingSet(string[] park)
+{
+	//시작지점을 찾는다
+	for (행(row) 0 부터 ; 공원의 행의 끝 까지; row++) 
+      {
+		for (열(col) 0 부터; 공원의 열의 끝까지; col++) 
+		{
+            	if (만약 문자가 'S' 이면?)
+			{
+                  	시작 지점 발견
+				return;
+                  }
+		}
+	}
+}
+
+//3번
+bool check(string[] park, char Dir, char w_dist)
+{
+	int row, col;
+
+	switch (Dir) //4 방향마다 체크
+	{
+		case 'E':
+			if (조건1 : 이동 했을 때의 거리가, 공원 범위을 벗어나면)
+				return false;
+			for (조건2 : col = 현재 위치의 E방향으로 한칸 부터; 목표 지점 까지; col++)
+			{
+				if ('X'로 막혀있는가?)
+				{
+                            return false;
+                        }
+			}
+			break;
+            }
+
+	return true;
+}
+
+//4번
+void Move(char Dir, char w_dist)
+// 방향에 따라 dist 거리로 이동
+{
+	int dist = w_dist - '0';	//문자열에서 숫자로 변환,  why? 아스키 코드 참고
+      switch (Dir) // 4방향마다 체크
+	{
+      	case 'E':
+            	현재 위치에서 += dist 이동;
+            	break;
+         	//case 'W','N','S'도 각각 처리
+	}
+}
+
+//1번
+int[] solution(string[] park, string[] routes) {
+	//시작지점 찾기 
+	StartingSet();
+
+	//명령어 수행
+	for (명령어(order) 0 부터; 명령어 끝까지; order++)
+      {
+      	if(명령 수행 전 조건을 모두 만족하는가? : check(park, route[0][0], route[0][2]))
+            {
+            	명령어 수행(이동);
+		}
+	}
+      return 결과;
+}
+
+
+
+================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+수도코드 풀이
+================================================================================================================
+
+1단계
+
+솔루션 함수 () {
+	// 시작지점을 찾는다
+	
+	// 이동 하려한다.
+		// 조건 1. 주어진 방향으로 이동할 때 공원을 벗어나는가?
+		// 조건 2. 주어진 방향으로 이동 중 장애물을 만나는가?
+        	// 조건 1과 조건 2중 어느 하나도 만족하지 않는다
+			// 이동한다.
+	// 결과 리턴  
+}
+
+Tip) 공원은 행(row)과 열(col) 2차원 평면 구조 => 이중배열 or 문자열 배열
+
+why?) 문자열 string은 char의 배열 구조 => 이용 가능
+
+
+
+
+
+
+
+================================================================================================================
+
+2단계
+
+public int[] solution(string[] park, string[] routes) {
+        	
+	//시작지점을 찾는다
+	for (행(row) 0 부터 ; 공원의 행의 끝 까지; row++) 
+      {
+		for (열(col) 0 부터; 공원의 열의 끝까지; col++) 
+		{
+            	if (만약 문자가 'S' 이면?)
+			{
+                  	시작 지점 발견
+				break;
+                  }
+		}
+	}
+	
+	//명령어 수행
+	for (명령어(order) 0 부터; 명령어 끝까지; order++)
+      {
+      	if(명령 수행 전 모든 조건을 모두 만족하는가?)
+            {
+            	명령어 수행(이동);
+		}
+	}
+      return 결과;
+}
+
+
+
+
+
+
+
+================================================================================================================
+
+3단계
+
+void StartingSet(string[] park)
+{
+	//시작지점을 찾는다
+	for (행(row) 0 부터 ; 공원의 행의 끝 까지; row++) 
+      {
+		for (열(col) 0 부터; 공원의 열의 끝까지; col++) 
+		{
+            	if (만약 문자가 'S' 이면?)
+			{
+                  	시작 지점 발견
+				return;
+                  }
+		}
+	}
+}
+
+bool check(string[] park, char Dir, char w_dist)
+{
+	int row, col;
+
+	switch (Dir) //4 방향마다 체크
+	{
+		case 'E':
+			if (조건1 : 이동 했을 때의 거리가, 공원 범위을 벗어나면)
+				return false;
+			for (조건2 : col = 현재 위치의 E방향으로 한칸 부터; 목표 지점 까지; col++)
+			{
+				if ('X'로 막혀있는가?)
+				{
+                            return false;
+                        }
+			}
+			break;
+            }
+
+	return true;
+}
+
+
+public int[] solution(string[] park, string[] routes) {
+	//시작지점 찾기 - 함수화 
+	StartingSet();
+
+	//명령어 수행
+	for (명령어(order) 0 부터; 명령어 끝까지; order++)
+      {
+      	if(명령 수행 전 조건을 모두 만족하는가? check(park, route[0][0], route[0][2]) - 함수화)	//route = 문자열 이므로 E 1은 {'E', ' ', '1'} = [0][1][2]
+            {
+            	명령어 수행(이동) - Move 함수;
+		}
+	}
+      return 결과;
+}
+
+
+
+
+
+
+
+================================================================================================================
+
+멘토 - 제출 코드) 
+Start 클래스 추가, 함수 정리, 조건 세부화 
+
+using System;
+
+public class Start {
+        private static int start_Row;
+        private static int start_Col;
+        static Start()
+        {
+            start_Row = 0;
+            start_Col = 0;
+        }
+        public void Change(int row, int col)
+        {
+            start_Row = row;
+            start_Col = col;
+        }
+        public int[] Show()
+        {
+            int[] a = { start_Row, start_Col };
+            return a;
+        }
+        public void StartingSet(string[] park)
+        {
+            for (int row = 0; row < park.Length; row++)
+            {
+                for (int col = 0; col < park[0].Length; col++)
+                {
+                    if (park[row][col] == 'S')
+                    {
+                        this.Change(row, col);
+                        return;
+                    }
+                }
+            }
+        }
+        public bool check(string[] park, char Dir, char w_dist)
+        {
+            int row = 0, col = 0;
+            int dist = w_dist - '0';
+            switch (Dir)
+            {
+                case 'E':
+                    if (start_Col + dist >= park[start_Row].Length)
+                        return false;
+                    for (col = start_Col + 1; col <= start_Col + dist; col++)
+                    {
+                        if (park[start_Row][col] =='X')
+                        {
+                            return false;
+                        }
+                    }
+                    break;
+
+                case 'W':
+                    if (start_Col - dist < 0)
+                        return false;
+                    for (col = start_Col - 1; col >= start_Col - dist; col--)
+                    {
+                        if (park[start_Row][col] == 'X')
+                        {
+                            return false;
+                        }
+                    }
+                    break;
+
+                case 'S':
+                    if (start_Row + dist >= park.Length)
+                        return false;
+                    for (row = start_Row + 1; row <= start_Row + dist; row++)
+                    {
+                        if (park[row][start_Col] == 'X')
+                        {
+                            return false;
+                        }
+                    }
+                    break;
+
+                case 'N':
+                    if (start_Row - dist < 0)
+                        return false;
+                    for (row = start_Row - 1; row >= start_Row - dist; row--)
+                    {
+                        if (park[row][start_Col] == 'X')
+                        {
+                            return false;
+                        }
+                    }
+                    break;
+
+            }
+
+            return true;
+        }
+
+        public void Move(char Dir, char w_dist)
+        {
+            int dist = w_dist - '0';
+            switch (Dir)
+            {
+                case 'E':
+                    start_Col += dist;
+                    break;
+                case 'W':
+                    start_Col -= dist;
+                    break;
+                case 'S':
+                    start_Row += dist;
+                    break;
+                case 'N':
+                    start_Row -= dist;
+                    break;
+
+            }
+        }
+}
+public class Solution {
+    static Start s_point = new Start();
+
+    public int[] solution(string[] park, string[] routes) {
+        //시작지점 찾기
+            for (int row = 0; row < park.Length; row++) 
+            {
+                for (int col = 0; col < park[0].Length; col++) 
+                {
+                    if (park[row][col].CompareTo('S')==0)
+                    {
+                        s_point.Change(row, col);
+                        break;
+                    }
+                }
+            }
+
+            //명령어 수행
+            for (int order = 0; order < routes.Length; order++)
+            {
+                if(s_point.check(park, routes[order][0], routes[order][2]))
+                {
+                    s_point.Move(routes[order][0], routes[order][2]);
+                }
+            }
+            return s_point.Show();
+    }
+}
+
+
+
+
+
+================================================================================================================
+
+다른 답변 코드)
+
+
+using System;
+
+public class Start {
+         private static int start_Row;
+        private static int start_Col;
+        static Start()
+        {
+            start_Row = 0;
+            start_Col = 0;
+        }
+        public void Change(int row, int col)
+        {
+            start_Row = row;
+            start_Col = col;
+        }
+        public int[] Show()
+        {
+            int[] a = { start_Row, start_Col };
+            return a;
+        }
+        public void StartingSet(string[] park)
+        {
+            for (int row = 0; row < park.Length; row++)
+            {
+                for (int col = 0; col < park[0].Length; col++)
+                {
+                    if (park[row][col] == 'S')
+                    {
+                        this.Change(row, col);
+                        return;
+                    }
+                }
+            }
+        }
+        public bool check(string[] park, char Dir, char w_dist)
+        {
+            int row = 0, col = 0;
+            int dist = w_dist - '0';
+            switch (Dir)
+            {
+                case 'E':
+                    if (start_Col + dist >= park[start_Row].Length)
+                        return false;
+                    for (col = start_Col + 1; col <= start_Col + dist; col++)
+                    {
+                        if (park[start_Row][col] =='X')
+                        {
+                            return false;
+                        }
+                    }
+                    break;
+
+                case 'W':
+                    if (start_Col - dist < 0)
+                        return false;
+                    for (col = start_Col - 1; col >= start_Col - dist; col--)
+                    {
+                        if (park[start_Row][col] == 'X')
+                        {
+                            return false;
+                        }
+                    }
+                    break;
+
+                case 'S':
+                    if (start_Row + dist >= park.Length)
+                        return false;
+                    for (row = start_Row + 1; row <= start_Row + dist; row++)
+                    {
+                        if (park[row][start_Col] == 'X')
+                        {
+                            return false;
+                        }
+                    }
+                    break;
+
+                case 'N':
+                    if (start_Row - dist < 0)
+                        return false;
+                    for (row = start_Row - 1; row >= start_Row - dist; row--)
+                    {
+                        if (park[row][start_Col] == 'X')
+                        {
+                            return false;
+                        }
+                    }
+                    break;
+
+            }
+
+            return true;
+        }
+
+        public void Move(char Dir, char w_dist)
+        {
+            int dist = w_dist - '0';
+            switch (Dir)
+            {
+                case 'E':
+                    start_Col += dist;
+                    break;
+                case 'W':
+                    start_Col -= dist;
+                    break;
+                case 'S':
+                    start_Row += dist;
+                    break;
+                case 'N':
+                    start_Row -= dist;
+                    break;
+
+            }
+        }
+}
+public class Solution {
+    static Start s_point = new Start();
+
+    public int[] solution(string[] park, string[] routes) {
+        //시작지점 찾기
+            for (int row = 0; row < park.Length; row++) 
+            {
+                for (int col = 0; col < park[0].Length; col++) 
+                {
+                    if (park[row][col].CompareTo('S')==0)
+                    {
+                        s_point.Change(row, col);
+                        break;
+                    }
+                }
+            }
+
+            //명령어 수행
+            for (int order = 0; order < routes.Length; order++)
+            {
+                if(s_point.check(park, routes[order][0], routes[order][2]))
+                {
+                    s_point.Move(routes[order][0], routes[order][2]);
+                }
+            }
+            return s_point.Show();
+    }
+}
