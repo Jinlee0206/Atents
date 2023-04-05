@@ -43,4 +43,6 @@ public class CharacterProperty : MonoBehaviour
             return _anim;
         }
     }
+
+    
 }
