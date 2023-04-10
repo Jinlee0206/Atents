@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DodgePlayer : CharacterMovement2D
 {
+    
     void Start()
     {
         
@@ -15,4 +16,7 @@ public class DodgePlayer : CharacterMovement2D
         myAnim.SetFloat("MoveSpeed", x);
         transform.Translate(x * Time.deltaTime * MoveSpeed, 0, 0);
     }
+
+
+
 }

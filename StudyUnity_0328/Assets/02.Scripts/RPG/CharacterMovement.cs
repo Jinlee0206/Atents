@@ -144,10 +144,5 @@ public class CharacterMovement : CharacterProperty
         }
     }
 
-    IEnumerator Test()
-    {
-        yield return new WaitUntil(() => MoveToPos);
-    }
-
   
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BOMB
   - FxTemporaire
+  - Bomb
   layers:
   - Default
   - TransparentFX
@@ -42,4 +43,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Item2D
+    uniqueID: 3505261595
+    locked: 0
+  - name: Machine2D
+    uniqueID: 2964040403
     locked: 0
