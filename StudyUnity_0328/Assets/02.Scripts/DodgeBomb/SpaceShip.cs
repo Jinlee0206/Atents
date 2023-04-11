@@ -22,8 +22,16 @@ public class SpaceShip : MonoBehaviour
                 myDir = 1.0f;
                 break;
         }
+    }
 
+    public void StartDrop()
+    {
         StartCoroutine(Dropping(2.0f));
+    }
+
+    public void StopDrop()
+    {
+        StopAllCoroutines();
     }
 
     void Update()

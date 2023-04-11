@@ -26,8 +26,11 @@ public class DodgeItem : MonoBehaviour
         switch (type)
         {
             case Type.Bomb:
+                myType = Type.Bomb;
+                
                 break;
             case Type.Score:
+                myType = Type.Score;
                 break;
         }
 
@@ -44,6 +47,19 @@ public class DodgeItem : MonoBehaviour
         if(((1<<collision.gameObject.layer) & crashMask) != 0)
         {
             Destroy(this.gameObject);
+
+            if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                switch (myType)
+                {
+                    case Type.Bomb:
+                        DodgeBombGameMgr.Instance.Life--;
+                        break;
+                    case Type.Score:
+                        DodgeBombGameMgr.Instance.Score += 100;
+                        break;
+                }
+            }
         }
     }
 }
