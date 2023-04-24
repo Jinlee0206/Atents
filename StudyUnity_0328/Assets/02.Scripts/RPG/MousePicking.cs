@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class MousePicking : MonoBehaviour
 {
@@ -18,7 +19,8 @@ public class MousePicking : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        // UI에 마우스 커서가 올라갔을 때 하기 함수가 true 가 됨
+        if(!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 

@@ -1,0 +1,129 @@
+게임 맵 최단거리
+
+------------------- 문제 설명 ----------------------
+
+문제) 게임 맵의 상태 maps가 매개변수로 주어질 때, 캐릭터가 상대 팀 진영에 도착하기 위해서 지나가야 하는 칸의 개수의 최솟값을 return 하도록 solution 함수를 완성해주세요.
+단, 상대 팀 진영에 도착할 수 없을 때는 -1을 return 해주세요.
+
+제한사항
+maps는 n x m 크기의 게임 맵의 상태가 들어있는 2차원 배열로, n과 m은 각각 1 이상 100 이하의 자연수입니다.
+n과 m은 서로 같을 수도, 다를 수도 있지만, n과 m이 모두 1인 경우는 입력으로 주어지지 않습니다.
+maps는 0과 1로만 이루어져 있으며, 0은 벽이 있는 자리, 1은 벽이 없는 자리를 나타냅니다.
+처음에 캐릭터는 게임 맵의 좌측 상단인 (1, 1) 위치에 있으며, 상대방 진영은 게임 맵의 우측 하단인 (n, m) 위치에 있습니다.
+
+입출력 예)
+maps						answer
+[[1,0,1,1,1],[1,0,1,0,1],[1,0,1,1,1],[1,1,1,0,1],[0,0,0,0,1]]	11
+[[1,0,1,1,1],[1,0,1,0,1],[1,0,1,1,1],[1,1,1,0,0],[0,0,0,0,1]]	-1
+
+------------------- 수도 코드 ---------------------
+
+
+using System;
+
+class Solution {
+    int형 변수 n, m 선언
+    
+    dy[4], dx[4] 상하좌우 이동 배열 만들기
+    
+    Queue<(int, int)> q 선언 및 인스턴스 생성
+    
+    public void bfs( i행, j열, 이차원 배열 매개변수로받기)
+    {
+        q에 지금 값 넣기
+       
+        while(큐가 없어질때까지 반복)
+        {
+            int형으로 x, y 선언 및 q의 맨 앞 값 받기
+            for(k 가 0 -> 4) // 상하좌우 4번 반복
+            {
+                다음으로 이동할 nx 값 선언, x에 dx 만큼 이동 // 현재 받은 위치에서 dx 만큼 이동
+                다음으로 이동할 ny 값 선언, y에 dy 만큼 이동 // 현재 받은 위치에서 dy 만큼 이동
+			     
+			    if(이동할 위치 nx, ny가 0보다 작거나 maps 길이보다 크면) continue;
+			    if(이동할 위치 nx, ny의 값이 벽(0)) continue; 
+			    if(이동한 위치 nx, ny의 값이 길(1)이면)
+				{
+                    				카운트 더하고 
+					현재 위치 큐에 저장
+				}
+            }
+		}
+	}
+
+    public int solution(int[,] maps) {
+        n = 맵의 행 길이 저장
+        m = 맵의 열 길이 저장
+
+        bfs(시작 행, 시작 열, maps);
+        
+        if (맵의 마지막 행과 열의 값이 1이라면) -1 리턴 // 도착하지 못한경우
+        else return 맵의 마지막 행과 열의 값 
+    }
+}
+
+
+need more information
+ 
+
+------------------- 알고리즘 ---------------------
+
+그래프 알고리즘 BFS는 최단거리 경로를 찾을 때 사용한다
+
+0 - 1 - 2 
+ ㄴ 3 - 4 - 5
+
+위와 같이 그래프가 연결되어있다면 0번에서 시작한 노드에서 순서대로 q에 들어가게되고
+방문 순서는 0 1 3 2 4 5 순서이다
+
+참고 : https://velog.io/@sukong/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EA%B0%9C%EB%85%90-%EB%84%88%EB%B9%84%EC%9A%B0%EC%84%A0%ED%83%90%EC%83%89BFS-lp8zywtn
+
+------------------- 문제 링크---------------------
+링크 : https://school.programmers.co.kr/learn/courses/30/lessons/1844
+
+=====================================================
+
+using System;
+using System.Collections.Generic;
+class Solution {
+        int ArrRow, ArrCol;
+        // 상 하 좌 우 순서
+        int[] dy = { 1, -1, 0, 0 };
+        int[] dx = { 0, 0, -1, 1 };
+
+        Queue<(int,int)> Q = new Queue<(int, int)>();
+
+        public void BFS(int col ,int row , int[,] maps)
+        {
+            Q.Enqueue((col, row));
+
+            while (Q.Count != 0)
+            {
+                (int x,int y) = Q.Dequeue();
+                
+                for (int k = 0; k < 4; k++)
+                {
+                    int nx = x + dx[k];
+                    int ny = y + dy[k];
+                    if (nx < 0 || ny < 0 || nx >= ArrCol || ny >= ArrRow) continue;
+                    if(maps[nx, ny] == 0) continue;
+                    if(maps[nx, ny] == 1)
+                    {
+                        maps[nx, ny] = maps[x, y] +1;
+                        Q.Enqueue((nx, ny));
+                    }
+                }
+            }
+        }
+
+    public int solution(int[,] maps)
+    {
+        ArrRow = maps.GetLength(1);
+        ArrCol = maps.GetLength(0);
+
+        BFS(0, 0, maps);
+
+        if (maps[ArrCol - 1, ArrRow - 1] == 1) return -1;
+        else return maps[ArrCol - 1, ArrRow - 1];
+    }
+}

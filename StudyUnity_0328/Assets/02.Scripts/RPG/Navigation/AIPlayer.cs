@@ -3,18 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIPlayer : AIMovement
+public class AIPlayer : AIMovement, IBattle
 {
+    public void OnDamage(float dmg)
+    {
+        curHp -= dmg;
+    }
 
+    public bool IsLive { get; }
 
     void Start()
     {
-        
+        MiniMapIcon icon =
+            (Instantiate(Resources.Load("MiniMapIcon"), SceneData.Inst.miniMap) as GameObject).GetComponent<MiniMapIcon>();
+        icon.Initialize(transform, Color.green);
     }
 
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.F1))
+        {
+            OnDamage(10.0f);
+        }
     }
 
     public void OnMove(Vector3 pos)
@@ -36,4 +46,5 @@ public class AIPlayer : AIMovement
             MoveByPath(path.corners);
         }
     }
+
 }

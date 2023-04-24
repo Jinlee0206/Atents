@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class CharacterProperty : MonoBehaviour
 {
     public UnityAction DeathAlarm;
+    public UnityEvent<float> updateHP;
 
     public float MoveSpeed = 2.0f;
     public float RotSpeed = 360.0f;
@@ -24,7 +25,11 @@ public class CharacterProperty : MonoBehaviour
             if (_curHp < 0.0f) _curHp = MaxHp;
             return _curHp;
         }
-        set => _curHp = Mathf.Clamp(value, 0.0f, MaxHp);
+        set
+        {
+            _curHp = Mathf.Clamp(value, 0.0f, MaxHp);
+            updateHP?.Invoke(Mathf.Approximately(MaxHp,0.0f) ? 0.0f : _curHp / MaxHp); // updateHP가 null이 아니면, 현재체력 / 최대체력으로
+        }
     }
 
     Animator _anim = null;
@@ -43,6 +48,4 @@ public class CharacterProperty : MonoBehaviour
             return _anim;
         }
     }
-
-    
 }

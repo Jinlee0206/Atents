@@ -1,0 +1,80 @@
+https://www.acmicpc.net/problem/1000
+문제 : 두 정수 A와 B를 입력받은 다음, A+B를 출력하는 프로그램을 작성하시오.
+
+using System;
+
+namespace Baekjoon
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string A,B;
+
+            A=Console.ReadLine();
+            B=Console.ReadLine();
+
+            int numberA;
+            if(int.TryParse(A, out numberA))
+            {
+                Console.WriteLine($"{numberA}");
+            }
+
+            int numberB;
+            if(int.TryParse(B, out numberB))
+            {
+                Console.WriteLine($"{numberB}");
+            }
+
+            Console.WriteLine($"{numberA + numberB}");
+        }
+    }
+}
+
+제출했는데 틀렸음..ㅠ
+-------------------------------------------------------------
+틀려서 다른 해답을 봤다
+
+using System;
+
+namespace Baekjoon
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] s = Console.ReadLine().Split();
+            
+            Console.WriteLine(int.Parse(s[0]) + int.Parse(s[1]));
+        }
+    }
+}
+
+-------------------------------------------------------------------
+다른 해답을 보고 배운 Split()메서드를 활용해서 풀어본 다른 문제
+
+문제
+두 자연수 A와 B가 주어진다. 이때, A+B, A-B, A*B, A/B(몫), A%B(나머지)를 출력하는 프로그램을 작성하시오. 
+
+링크:https://www.acmicpc.net/problem/10869
+
+using System;
+
+namespace Baekjoon
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] s = Console.ReadLine().Split();
+            int a = int.Parse(s[0]);
+            int b = int.Parse(s[1]);
+            Console.WriteLine(a + b);
+            Console.WriteLine(a - b);
+            Console.WriteLine(a * b);
+            Console.WriteLine(a / b);
+            Console.WriteLine(a % b);
+        }
+    }
+}
+

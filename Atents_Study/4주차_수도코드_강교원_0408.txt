@@ -1,0 +1,75 @@
+스킬트리
+------------------- 문제 설명 ----------------------
+문제) skill 문자열과 문자열의 배열 skill_trees 을 입력받을때
+skill_trees 의 각각의 문자열에 skill 의 index 가 맨 앞에서부터 순서에 맞게 등장하는 문자열의 갯수를 구하세요.
+
+조건) 
+skill 문자열의 문자 사이에는 상관없는 문자가 끼어있어도 상관없습니다. 
+ex) skill = "AB" skill_trees[n] = "ACBD" => 가능 
+skill 입력은 알파벳 대문자로 표기하며, 모든 문자열은 알파벳 대문자로만 이루어져 있습니다.
+선행 스킬 순서 skill의 길이는 1 이상 26 이하이며, 스킬은 중복해 주어지지 않습니다.
+skill_trees는 길이 1 이상 20 이하인 배열입니다.
+skill_trees의 원소는 스킬을 나타내는 문자열입니다.
+skill_trees의 원소는 길이가 2 이상 26 이하인 문자열이며, 스킬이 중복해 주어지지 않습니다.
+
+입출력 예
+skill	skill_trees							return
+"CBD"	["BACDE", "CBADF", "AECB", "BDA"]	2
+"CBD"   ["BACDE", "BDA"]					0
+"CBD"	["AFG"]								1
+"CBD"	["ACFBGD" , "CED"]					1
+
+------------------- 예외 처리 ----------------------
+1.skill 입력값이 skill_trees[n] 에 하나도 없을때
+
+------------------- 수도 코드 ----------------------
+
+매개변수로 string형 skill , string[]형 skill_trees를 갖고
+int 형 반환값을 갖는 함수 solution 선언
+
+int형 변수
+정답을 담는 answer
+인덱스를 담을 index
+임시값을 담을 tmp
+선언
+
+skill_trees의 문자열의 갯수만큼 반복 //1번지점
+	index 초기화
+	
+	skill_trees의 i번 문자열의 길이만큼 반복 //2번지점
+		tmp 초기화
+		
+		//예외처리
+		skill의 길이만큼 반복
+			skill_trees의 n번 문자열이 skill의 k번째 값을 가지고잇다면
+			tmp 증가
+		
+		tmp 가 0이라면 
+			answer증가
+			1번지점으로 탈출
+		
+		
+		skill_trees의 i번 문자열의 j번째 문자가 skill의 index 번째 문자와 같을때
+			index 증가
+			
+			index가 skill의 길이와 같다면
+				answer 증가
+				index초기화
+				1번지점으로 탈출
+
+		또는 skill에 skill_trees의 i번 문자열의 j번재 문자가 담겨있을때
+			index 초기화
+			1번지점으로 탈출
+		
+		또는 마지막 반복일때 index 가 0보다 크면
+			answer 증가
+			
+		
+	answer 반환
+
+
+
+------------------- 문제 링크 ----------------------
+
+
+https://school.programmers.co.kr/learn/courses/30/lessons/49993

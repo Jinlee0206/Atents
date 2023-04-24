@@ -1,0 +1,59 @@
+백준 풀었어용..
+
+문제링크: https://www.acmicpc.net/problem/9498
+
+문제
+시험 점수를 입력받아 90 ~ 100점은 A, 80 ~ 89점은 B, 70 ~ 79점은 C, 60 ~ 69점은 D, 나머지 점수는 F를 출력하는 프로그램을 작성하시오.
+
+입력
+첫째 줄에 시험 점수가 주어진다. 시험 점수는 0보다 크거나 같고, 100보다 작거나 같은 정수이다.
+
+출력
+시험 성적을 출력한다.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp16
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string txt = Console.ReadLine();
+            int num;
+      
+            if (int.TryParse(txt, out num))
+            {
+                if (90 <= num && num <= 100)
+                {
+                    Console.WriteLine("A");
+                }
+                else if (80 <= num && num <= 89)
+                {
+                    Console.WriteLine("B");
+                }
+                else if (70 <= num && num <= 79)
+                {
+                    Console.WriteLine("C");
+                }
+                else if (60 <= num && num <= 69)
+                {
+                    Console.WriteLine("D");
+                }
+                else
+                {
+                    Console.WriteLine("F");
+                }
+            }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다");
+            }
+        }
+    }
+}
+

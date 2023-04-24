@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Monster : CharacterMovement, IPerception, IBattle
 {
@@ -21,7 +22,10 @@ public class Monster : CharacterMovement, IPerception, IBattle
     Vector3 orgPos;
 
     public Transform myTarget = null;
-    
+    public Transform myHeadPoint = null;
+
+    UnityAction deadAction = null; // 몬스터가 죽을 때 처리되는 함수 
+
     public bool IsLive { get => myState != State.Death; }
     
     void ChangeState(State s)
@@ -73,6 +77,25 @@ public class Monster : CharacterMovement, IPerception, IBattle
         TotalCount++;
         orgPos = transform.position;
         ChangeState(State.Normal);
+
+        GameObject obj = Instantiate(Resources.Load("MonsterHPBar"), SceneData.Inst.hpBars) as GameObject;
+        HPBarUI hpBarUI = obj.GetComponent<HPBarUI>();
+
+        // 생성된 게임오브젝트 obj(hpBarUI 컴포넌트를 가짐) 가 canvas를 찾는 방법
+        //Canvas canvas = FindObjectOfType<Canvas>(); // 씬에 존재하는 모든 오브젝트를 검사하면서 찾음(비용이 비쌈), 캔버스가 하나인 경우만 사용
+        //GameObject objCanvas = GameObject.Find("Canvas"); // Find 계열의 함수(비용이 비쌈), 스트링 사용 오타 유발이 야기됨
+
+        // GameManager를 생성해 놓고 거기서 Canvas 오브젝트를 static으로 선언 및 바인딩
+
+        hpBarUI.myRoot = myHeadPoint;
+        updateHP.AddListener(hpBarUI.updateHP); // UnityEvent 누적함수
+        deadAction += () => Destroy(hpBarUI.gameObject);
+
+        MiniMapIcon icon =
+            (Instantiate(Resources.Load("MiniMapIcon"), SceneData.Inst.miniMap) as GameObject).GetComponent<MiniMapIcon>();
+        icon.Initialize(transform, Color.red);
+        deadAction += () => Destroy(icon.gameObject);
+
     }
 
     // Update is called once per frame
@@ -158,6 +181,7 @@ public class Monster : CharacterMovement, IPerception, IBattle
             transform.Translate(Vector3.down * 0.5f * Time.deltaTime);
             yield return null;
         }
+        deadAction?.Invoke();       // UI icon과  
         Destroy(this.gameObject);
         TotalCount--;
     }

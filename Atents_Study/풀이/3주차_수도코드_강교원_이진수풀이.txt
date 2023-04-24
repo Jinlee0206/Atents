@@ -1,0 +1,215 @@
+수도코드
+문제 요약
+배열 Queue1 Queue2 가 Que로써 입력으로 주어집니다.
+각각의 큐의 원소의 합이 같도록 만드세요 
+-------------------------------------------------------
+예외처리 케이스
+1. 두 큐의 합이 홀수일때
+2. 한개의값이 나머지 전체보다 클때
+-------------------------------------------------------
+연산을 위해 필요한 함수 2개 TossQue ,Qsum
+
+int형 Queue Q1 , Q2 와 참조형 long 값 Q1Sum , Q2Sum 을 매개변수로 갖는 void형 함수 TossQue 선언
+
+int형 임시값 Temp 선언 및 초기화
+Q1에서 값을빼서 Temp에 대입
+Q1Sum에서 Temp 만큼 빼고
+Q2SUm에서 Temp 만큼 해준뒤에
+Q2에 Temp 삽입
+리턴
+
+int형 배열 que 를 매개변수로 갖는 long형 함수 Qsum 선언
+
+long 형 임시값 Temp 선언 및 초기화;
+
+Temp에 que[]의 모든 방의 값 더해주기
+Temp 리턴
+-------------------------------------------------------------------------------------------------------
+메인 연산을 하는 함수 
+
+int형 배열 두개 queue1 , queue2 를 입력받고 int형 값을 반환하는 함수 선언 
+
+int형 Queue 인스턴스 2개 생성 Q1 , Q2
+2개 Queue 각각의 합을 담을 long형 변수 2개선언 Q1Sum ,Q2Sum
+long형  두 Queue의 총합을 담을 변수 TotalSum ,TotalSum의 절반값을 담을 HalfSum 선언
+반환값을 담을 변수 Count 선언 
+
+queue1을 Q1로 옮겨담기
+queue2를 Q2로 옮겨담기
+
+Q1Sum 에 Qsum(queue1) 의 반환값 대입
+Q2Sum 에 Qsum(queue2) 의 반환값 대입
+TotalSum 의 값 구하기
+
+예외처리 첫번째 두 큐의 합 TotalSum 이 홀수일때 -1 반환시키고 짝수일때는 진행하기
+SumHalf 의 값 구하기
+
+count 가 queue1의 길이의 4배보다 작을때 반복
+{
+	Q1Sum이 HalfSum보다 작을때
+	{
+		예외처리 2번. Q2가 1개만남앗을때 -1리턴 
+		TossQue 함수로 Q2->Q1 원소 넘겨주기
+		count 증가
+	}
+	Q2Sum이 HalfSum보다 작을때
+	{
+		예외처리 2번 Q1가 1개만남앗을때 -1리턴
+		TossQue함수로 Q1 -> Q2 원소 넘겨주기
+		count 증가
+	}
+	Q1Sum 이 HalfSum과 같을때
+		count 리턴
+}
+
+=============================================
+문제 좌표 : https://school.programmers.co.kr/learn/courses/30/lessons/118667#
+문제 전문
+
+길이가 같은 두 개의 큐가 주어집니다. 하나의 큐를 골라 원소를 추출(pop)하고, 추출된 원소를 다른 큐에 집어넣는(insert) 작업을 통해 각 큐의 원소 합이 같도록 만들려고 합니다. 이때 필요한 작업의 최소 횟수를 구하고자 합니다. 한 번의 pop과 한 번의 insert를 합쳐서 작업을 1회 수행한 것으로 간주합니다.
+
+큐는 먼저 집어넣은 원소가 먼저 나오는 구조입니다. 이 문제에서는 큐를 배열로 표현하며, 원소가 배열 앞쪽에 있을수록 먼저 집어넣은 원소임을 의미합니다. 즉, pop을 하면 배열의 첫 번째 원소가 추출되며, insert를 하면 배열의 끝에 원소가 추가됩니다. 예를 들어 큐 [1, 2, 3, 4]가 주어졌을 때, pop을 하면 맨 앞에 있는 원소 1이 추출되어 [2, 3, 4]가 되며, 이어서 5를 insert하면 [2, 3, 4, 5]가 됩니다.
+
+다음은 두 큐를 나타내는 예시입니다.
+
+queue1 = [3, 2, 7, 2]
+queue2 = [4, 6, 5, 1]
+두 큐에 담긴 모든 원소의 합은 30입니다. 따라서, 각 큐의 합을 15로 만들어야 합니다. 예를 들어, 다음과 같이 2가지 방법이 있습니다.
+
+queue2의 4, 6, 5를 순서대로 추출하여 queue1에 추가한 뒤, queue1의 3, 2, 7, 2를 순서대로 추출하여 queue2에 추가합니다. 그 결과 queue1은 [4, 6, 5], queue2는 [1, 3, 2, 7, 2]가 되며, 각 큐의 원소 합은 15로 같습니다. 이 방법은 작업을 7번 수행합니다.
+queue1에서 3을 추출하여 queue2에 추가합니다. 그리고 queue2에서 4를 추출하여 queue1에 추가합니다. 그 결과 queue1은 [2, 7, 2, 4], queue2는 [6, 5, 1, 3]가 되며, 각 큐의 원소 합은 15로 같습니다. 이 방법은 작업을 2번만 수행하며, 이보다 적은 횟수로 목표를 달성할 수 없습니다.
+따라서 각 큐의 원소 합을 같게 만들기 위해 필요한 작업의 최소 횟수는 2입니다.
+
+길이가 같은 두 개의 큐를 나타내는 정수 배열 queue1, queue2가 매개변수로 주어집니다. 각 큐의 원소 합을 같게 만들기 위해 필요한 작업의 최소 횟수를 return 하도록 solution 함수를 완성해주세요. 단, 어떤 방법으로도 각 큐의 원소 합을 같게 만들 수 없는 경우, -1을 return 해주세요.
+
+제한사항
+1 ≤ queue1의 길이 = queue2의 길이 ≤ 300,000
+1 ≤ queue1의 원소, queue2의 원소 ≤ 109
+주의: 언어에 따라 합 계산 과정 중 산술 오버플로우 발생 가능성이 있으므로 long type 고려가 필요합니다.
+입출력 예
+queue1	queue2	result
+[3, 2, 7, 2]	[4, 6, 5, 1]	2
+[1, 2, 1, 2]	[1, 10, 1, 2]	7
+[1, 1]	[1, 5]	-1
+
+
+=====================================================
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+
+public class Solution {
+    public int solution(int[] queue1, int[] queue2) {
+        Queue<int> q1 = new Queue<int>();
+        Queue<int> q2 = new Queue<int>();
+        
+        long q1Sum = 0;
+        long q2Sum = 0;
+        
+        long totalSum = 0;
+        long halfSum = 0;
+        int count = 0;
+        
+        foreach(var i in queue1)
+        {
+            q1.Enqueue(i);
+            q1Sum += i;
+        }
+        
+        foreach(var i in queue2)
+        {
+            q2.Enqueue(i);
+            q2Sum += i;
+        }
+        
+        q1Sum = queue1.Sum();
+        q2Sum = queue2.Sum();
+        
+        totalSum = q1Sum + q2Sum;
+        halfSum = totalSum / 2;
+        
+        if(totalSum % 2 != 0) return -1;
+        else
+        {
+            while(count >= queue1.Length * 4)
+            {
+                if(q1Sum < halfSum)
+                {
+                    if(q2.Count == 1) return -1;
+                    //tossQue 함수가 뭔지모르겠음...
+                    count++;
+                }
+                else
+                {
+                    if(q2.Count == 1) return -1;
+                    //tossQue 함수 아무리찾아도 안나옴...
+                    count++;
+                }
+                if(q1Sum == halfSum) return count;
+            }
+            return -1;
+        }
+    }
+}
+
+=======================================================
+c++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int solution(vector<int> queue1, vector<int> queue2) {
+    int length = queue1.size();
+    long mid = 0;
+
+    queue<long> q1, q2;
+
+    int cnt = 0;
+    long sum1 = 0, sum2 = 0;
+
+    for (int i = 0; i < length; i++)
+    {
+        mid += queue1[i] + queue2[i];
+        sum1 += queue1[i];
+        sum2 += queue2[i];
+        q1.push(queue1[i]);
+        q2.push(queue2[i]);
+    }
+
+    mid /= 2;
+
+    if ((sum1 + sum2) % 2 != 0) return -1;
+
+    while (true)
+    {
+        if (cnt >= length * 3) break;
+
+        if (sum1 > sum2)
+        {
+            int tmp = q1.front();
+            q2.push(tmp);
+            sum1 -= tmp;
+            sum2 += tmp;
+            q1.pop();
+        }
+
+        else if (sum2 > sum1)
+        {
+            int tmp = q2.front();
+            q1.push(tmp);
+            sum2 -= tmp;
+            sum1 += tmp;
+            q2.pop();
+        }
+        else
+        {
+            if (sum1 == mid) return cnt;
+            break;
+        }
+
+        cnt++;
+    }
+
+    return -1;
+}

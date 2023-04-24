@@ -1,0 +1,106 @@
+------------------- 1. 입출력 예시---------------------
+
+int solution(int bridge_length, int weight, int[] truck_weights)
+
+bridge_length	weight	truck_weights					return
+2				10		[7,4,5,6]						8
+100				100		[10]							101
+100				100		[10,10,10,10,10,10,10,10,10,10]	110
+
+
+------------------- 2. 수도 코드---------------------
+
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+public class Truck
+{
+    public int 무게 저장 변수;
+    public int 현재 위치;
+
+    public Truck(int 무게, int 초기 진행도)
+    {
+		객체의 무게 = 무게;
+        객체의 현재 위치 = 다리 길이;
+    }
+
+    public void 진행()
+    {
+        현재 위치 증가;
+    }
+    public bool 도착여부 확인(다리 길이)
+    {
+        if (현재 위치가 다리 길이를 초과했는가?)
+            return 네;
+        return 아니요;
+    }
+
+}
+
+public class Solution
+{
+    static public int solution(int bridge_length, int weight, int[] truck_weights)
+    {
+        다리에 진입하기 전인 트럭을 보관하는 자료 구조(무관);	//truck_weights의 순서로 나오기만 하면 상관없음, 스택/큐/배열 가능
+        다리에 진입중인 트럭을 보관하는 선입선출 자료 구조;
+
+        int 총 시간 = 0;
+
+		//truck_weights 순서대로 다리에 진입하기 전인 트럭을 보관하는 자료구조에 할당
+        for (truck_weights 순서대로 하나씩)
+        {
+            다리에 진입하기 전인 트럭에 할당;
+        }
+
+
+        while ( true )
+        {
+            if (다리랑 아직 진입하지 않는 트럭이 모두 없다면?) break;
+
+            // 진행
+            bool 다리 진입 여부 = 아니;
+
+            foreach (다리에 있는 트럭들 중 하나씩)
+            {
+                트럭.진행();
+				
+                if (트럭.도착여부 확인(다리 길이))
+                {
+                    다리 진입 여부 = 어;
+                }
+            }
+            
+            if (다리 진입 여부) 다리 하차;
+
+            // 진입
+            if (아직 진입전인 트럭이 남았나? && 현재 다리에 올라간 트럭 총 무게 + 진입할 트럭 무게가 다리 제한 무게보다 낮으면)
+                다리에 트럭(진입 순서(선두)인 트럭)을 진입
+
+            총 시간++;
+
+        }
+        return 총 시간;
+    }
+        
+
+
+	//메인 문
+    static void Main(string[] args)
+    {
+        int bridge_length = 2;
+        int weight = 10;
+        int[] truck_weights = { 7, 4, 5, 6 };
+
+        Console.WriteLine($"{solution(bridge_length, weight, truck_weights)}");
+    }
+
+
+}
+------------------- 3. 필요 개념---------------------
+스택, 큐 개념 확인
+
+
+
+------------------- 4. 문제 링크---------------------
+https://school.programmers.co.kr/learn/courses/30/lessons/42583
